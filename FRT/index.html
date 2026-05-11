@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reflective Face Analysis Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script type="module" defer src="./js/main.js"></script>
+  </head>
+  <body>
+    <main class="mirror">
+      <video id="webcam" autoplay muted playsinline></video>
+      <canvas id="overlay"></canvas>
+
+      <section class="dramatic-grid" aria-live="polite">
+        <p id="dramaticState" class="dramatic-text dramatic-text--slot-1 dramatic-text--searching">
+          AWAITING SUBJECT
+        </p>
+        <p id="dramaticAge" class="dramatic-text dramatic-text--slot-2 dramatic-text--tracking">
+          AGE ANALYSIS PENDING
+        </p>
+        <p id="dramaticGender" class="dramatic-text dramatic-text--slot-3 dramatic-text--tracking">
+          GENDER ANALYSIS PENDING
+        </p>
+        <p id="dramaticEmotion" class="dramatic-text dramatic-text--slot-4 dramatic-text--alert">
+          EMOTION ANALYSIS PENDING
+        </p>
+      </section>
+
+      <p id="notice" class="notice">Local-only processing. No images or data are stored.</p>
+    </main>
+  </body>
+</html>

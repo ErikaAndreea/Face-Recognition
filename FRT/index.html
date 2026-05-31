@@ -4,14 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reflective Face Analysis Prototype</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=49" />
     <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-    <script type="module" defer src="./js/main.js"></script>
+    <script type="module" defer src="./js/main.js?v=49"></script>
   </head>
-  <body>
-    <main class="mirror">
+  <body class="intro-active atmosphere--boot">
+    <div
+      id="intro"
+      class="intro"
+      role="dialog"
+      aria-labelledby="introTitle"
+      aria-describedby="introDescription"
+      aria-modal="true"
+    >
+      <div class="intro__depth" aria-hidden="true"></div>
+
+      <div class="intro__content">
+        <header class="intro__header">
+          <h1 id="introTitle" class="intro__title intro__line">Before you begin</h1>
+        </header>
+
+        <div id="introDescription" class="intro__copy">
+          <span class="intro__line">This experience uses your camera for real-time analysis only.</span>
+          <span class="intro__line">Nothing is recorded, stored, or shared.</span>
+          <span class="intro__line">All processing stays on this device.</span>
+          <span class="intro__line">When you leave, nothing from your visit remains.</span>
+        </div>
+
+        <footer class="intro__footer">
+          <span class="intro__line intro__line--consent">By continuing, you agree to participate.</span>
+          <button id="introContinue" type="button" class="intro__continue">Continue</button>
+        </footer>
+      </div>
+    </div>
+
+    <main class="mirror mirror--hidden" id="mirror" aria-hidden="true">
       <video id="webcam" autoplay muted playsinline></video>
       <canvas id="overlay"></canvas>
+      <div class="fx-layer fx-layer--scanlines" aria-hidden="true"></div>
+      <div class="fx-layer fx-layer--grain" aria-hidden="true"></div>
+      <div class="fx-layer fx-layer--vignette" aria-hidden="true"></div>
+
+      <div id="statusCaptions" class="status-captions" aria-live="polite"></div>
 
       <section class="dramatic-grid" aria-live="polite">
         <p id="dramaticState" class="dramatic-text dramatic-text--slot-1 dramatic-text--searching">
@@ -29,6 +69,46 @@
       </section>
 
       <p id="notice" class="notice">Local-only processing. No images or data are stored.</p>
+
+      <div
+        id="captureCountdown"
+        class="capture-countdown capture-countdown--hidden"
+        aria-live="assertive"
+        aria-hidden="true"
+      >
+        <p class="capture-countdown__message">Look at the camera</p>
+        <p id="captureCountdownValue" class="capture-countdown__value">5</p>
+      </div>
     </main>
+
+    <section id="posterStage" class="poster-stage poster-stage--hidden" aria-hidden="true">
+      <div class="poster-stage__depth" aria-hidden="true"></div>
+      <div class="poster-stage__flash" aria-hidden="true"></div>
+      <div class="poster-stage__layout">
+        <header class="poster-stage__header">
+          <p class="poster-stage__label">Misplaced identity</p>
+          <h2 id="posterTitle" class="poster-stage__title">Scenario</h2>
+          <p id="posterCounter" class="poster-stage__counter">1 / 5</p>
+        </header>
+        <figure class="poster-stage__frame">
+          <canvas id="posterCanvas" class="poster-stage__canvas"></canvas>
+        </figure>
+        <footer class="poster-stage__footer">
+          <p id="posterNotice" class="poster-stage__notice">Processed locally — nothing is saved</p>
+          <p id="posterHint" class="poster-stage__hint">Your face, in the wrong context</p>
+          <div class="poster-stage__actions poster-stage__actions--browse">
+            <button id="posterNext" type="button" class="poster-stage__btn">Next scenario</button>
+            <button id="posterRestart" type="button" class="poster-stage__btn poster-stage__btn--ghost">
+              New subject
+            </button>
+          </div>
+          <div class="poster-stage__actions poster-stage__actions--continue">
+            <button id="posterContinue" type="button" class="poster-stage__btn poster-stage__btn--continue">
+              Continue
+            </button>
+          </div>
+        </footer>
+      </div>
+    </section>
   </body>
 </html>
